@@ -21,7 +21,7 @@ export default function Profile() {
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
-  const [updateSuccess, setUpdateSuccess] = useState(false)
+  const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
   console.log(formData);
 
@@ -75,11 +75,11 @@ export default function Profile() {
 
       if (data.success === false) {
         dispatch(updateUserFailure(data.message));
-        return
+        return;
       }
 
-      dispatch(updateUserSuccess(data))
-      setUpdateSuccess(true)
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
     }
@@ -142,8 +142,11 @@ export default function Profile() {
           className="border p-3 rounded-lg"
         />
 
-        <button disabled={loading} className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80">
-          {loading ? 'Updating...' : 'Update'}
+        <button
+          disabled={loading}
+          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Updating..." : "Update"}
         </button>
       </form>
 
@@ -157,8 +160,10 @@ export default function Profile() {
         </button>
       </div>
 
-      <p className="text-red-700">{error ? error : ''}</p>
-      <p className="text-green-700">{updateSuccess ? 'Successfully Updated!' : ''}</p>
+      <p className="text-red-700">{error ? error : ""}</p>
+      <p className="text-green-700">
+        {updateSuccess ? "Successfully Updated!" : ""}
+      </p>
     </div>
   );
 }
