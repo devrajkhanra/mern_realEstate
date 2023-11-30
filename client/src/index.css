@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Roboto Flex';
+  font-family: 'Roboto Flex', 'Sans serif';
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
