@@ -1,9 +1,31 @@
 import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  signoutUserStart,
+  signoutUserSuccess,
+  signoutUserFailure,
+} from "../store/user/userSlice";
 
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  
+  
+  const handleSignout = async () => {
+    try {
+      dispatch(signoutUserStart());
+      const res = await fetch("api/auth/signout");
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(signoutUserFailure(data.message));
+        return;
+      }
+      dispatch(signoutUserSuccess(data));
+    } catch (error) {
+      dispatch(signoutUserFailure(error.message));
+    }
+  };
 
   return (
     <>
@@ -40,8 +62,19 @@ export default function Header() {
               </Link>
 
               <Link to="/profile">
-                <img className="rounded-full h-6 w-6" src={currentUser.avatar} alt="profile"/>
+                <img
+                  className="rounded-full h-6 w-6"
+                  src={currentUser.avatar}
+                  alt="profile"
+                />
               </Link>
+
+              <img
+                className="h-6 w-6 hover:cursor-pointer"
+                type="button"
+                src="logout.svg"
+                onClick={handleSignout}
+              ></img>
             </ul>
           </div>
         </header>

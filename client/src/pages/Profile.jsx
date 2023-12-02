@@ -101,10 +101,10 @@ export default function Profile() {
 
       if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
-        return
+        return;
       }
 
-      dispatch(deleteUserSuccess(data))
+      dispatch(deleteUserSuccess(data));
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
@@ -179,12 +179,6 @@ export default function Profile() {
         <span onClick={handleDelete} className="text-red-700 cursor-pointer">
           Delete Account?
         </span>
-        <button
-          className="outline-1 outline rounded-sm max-w-xs py-2"
-          type="button"
-        >
-          <span className="text-slate-700">Log Out</span>
-        </button>
       </div>
 
       <p className="text-red-700">{error ? error : ""}</p>
