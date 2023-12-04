@@ -10,8 +10,7 @@ import {
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  
-  
+
   const handleSignout = async () => {
     try {
       dispatch(signoutUserStart());
@@ -30,7 +29,7 @@ export default function Header() {
   return (
     <>
       {currentUser ? (
-        <header className="bg-slate-100 shadow-md">
+        <header className="bg-slate-50 shadow-md">
           <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
             <Link to="/">
               <h1 className="font-semibold text-sm sm:text-4xl flex flex-wrap">
@@ -39,13 +38,13 @@ export default function Header() {
               </h1>
             </Link>
 
-            <form className="bg-slate-50 p-3 rounded-3xl flex items-center">
+            <form className="bg-white p-3 rounded-3xl flex items-center">
               <input
                 type="search"
                 placeholder="Search"
                 className="bg-transparent focus:outline-none w-24 sm:w-64"
               />
-              <FaSearch className="text-slate-400" />
+              <FaSearch className="text-slate-400 hover:cursor-pointer" />
             </form>
 
             <ul className="flex gap-4">
@@ -69,12 +68,22 @@ export default function Header() {
                 />
               </Link>
 
+              <Link to="/listing">
+                <img
+                  className="h-6 w-6"
+                  src="list.svg"
+                  alt="create listing"
+                />
+              </Link>
+              
               <img
                 className="h-6 w-6 hover:cursor-pointer"
                 type="button"
                 src="logout.svg"
                 onClick={handleSignout}
               ></img>
+
+              
             </ul>
           </div>
         </header>
