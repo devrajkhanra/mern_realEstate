@@ -148,7 +148,7 @@ export default function Profile() {
           defaultValue={currentUser.username}
           onChange={handleChange}
           id="username"
-          className="border p-3 rounded-lg"
+          className="outline outline-1 outline-gray-400 p-3"
         />
         <input
           type="email"
@@ -156,7 +156,7 @@ export default function Profile() {
           defaultValue={currentUser.email}
           onChange={handleChange}
           id="email"
-          className="border p-3 rounded-lg"
+          className="outline outline-1 outline-gray-400 p-3 "
         />
         <input
           type="password"
@@ -164,12 +164,12 @@ export default function Profile() {
           defaultValue={currentUser.password}
           onChange={handleChange}
           id="password"
-          className="border p-3 rounded-lg"
+          className="outline outline-1 outline-gray-400 p-3"
         />
 
         <button
           disabled={loading}
-          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+          className="p-3 bg-slate-700 text-white uppercase hover:opacity-95 disabled:opacity-80 hover:bg-green-500 hover:shadow-xl"
         >
           {loading ? "Updating..." : "Update"}
         </button>

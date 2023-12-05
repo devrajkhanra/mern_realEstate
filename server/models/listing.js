@@ -17,15 +17,7 @@ const listingSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    discountedPrice: {
-      type: Number,
-      required: true,
-    },
-    floors: {
-      type: Number,
-      required: true,
-    },
-    area: {
+    discountPrice: {
       type: Number,
       required: true,
     },
@@ -45,8 +37,12 @@ const listingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    offer: {
+    type: {
       type: String,
+      required: true,
+    },
+    offer: {
+      type: Boolean,
       required: true,
     },
     imageUrls: {
@@ -60,6 +56,7 @@ const listingSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 const Listing = mongoose.model("Listing", listingSchema);
 
