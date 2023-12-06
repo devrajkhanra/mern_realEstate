@@ -1,5 +1,6 @@
 import bcryptsjs from "bcryptjs";
 import User from "../models/user.js";
+import Listings from "../models/listing.js";
 import { errorHandler } from "../utils/error.js";
 
 export const test = (req, res) => {
@@ -45,6 +46,19 @@ export const deleteUser = async (req, res, next) => {
     await User.findByIdAndDelete(req.params.id);
     res.clearCookie("access_token");
     res.status(200).json({ message: "User has been deleted!" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getUserListings = async (req, res, next) => {
+  if (req.user.id !== req.params.id)
+    return next(errorHandler(401, "Unauthorized"));
+
+  try {
+    const listings = await Listings.find({ userRef: req.params.id });
+    console.log(listings);
+    res.status(200).json(listings);
   } catch (error) {
     next(error);
   }
