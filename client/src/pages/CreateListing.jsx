@@ -158,7 +158,7 @@ export default function CreateListing() {
       <h1 className="text-3xl font-semibold text-center my-7">
         Create a Listing
       </h1>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+      <form onSubmit={handleSubmit} className=" flex flex-col sm:flex-row gap-4">
         <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
@@ -367,7 +367,7 @@ export default function CreateListing() {
             ))}
           <button
             disabled={loading || uploading}
-            className="p-3 bg-slate-700 text-white uppercase hover:opacity-95 disabled:opacity-80 hover:bg-green-500 hover:shadow-xl"
+            className="p-3 bg-slate-700 text-white uppercase disabled:opacity-80 hover:bg-green-500 hover:text-green-50 hover:shadow-lg"
           >
             {loading ? "Creating..." : "Create listing"}
           </button>
