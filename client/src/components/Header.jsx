@@ -68,7 +68,7 @@ export default function Header() {
                 />
               </Link>
 
-              <Link to="/listing">
+              <Link to="/createlisting">
                 <img
                   className="h-6 w-6"
                   src="list.svg"

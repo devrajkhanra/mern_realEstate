@@ -159,7 +159,6 @@ export default function Profile() {
     }
   };
 
-  // const handleEditListing = async (listingId) => {};
   return (
     <div className={`p-3 ${toggleViewListing.width} mx-auto`}>
       <div className="flex flex-col sm:flex-row gap-4">
@@ -296,13 +295,15 @@ export default function Profile() {
                   >
                     <img className="hover:shadow-lg" src="delete.svg" alt="" />
                   </button>
+                  
+                  <Link to={`/updatelisting/${listings._id}`}>
                   <button
                     type="button"
                     className="h-6 w-6 hover:shadow-lg"
-                    // onClick={handleEditListing(listing._id)}
                   >
                     <img className="hover:shadow-lg" src="edit.svg" alt="" />
                   </button>
+                  </Link>
                 </div>
               </div>
             ))}

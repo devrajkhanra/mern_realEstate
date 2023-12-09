@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getDownloadURL,
   getStorage,
@@ -7,11 +7,12 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function CreateListing() {
+export default function UpdateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const params = useParams();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     imageUrls: [],
@@ -31,7 +32,25 @@ export default function CreateListing() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      const listingId = params.listingId;
+      const res = await fetch(`/api/listing/get/${listingId}`);
+      const data = await res.json();
+
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setFormData(data);
+    };
+
+    fetchListing();
+  }, []);
+
   console.log(formData);
+
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -125,14 +144,16 @@ export default function CreateListing() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (formData.imageUrls.length < 1)
         return setError("You must upload at least one image");
+
       if (+formData.regularPrice < +formData.discountPrice)
         return setError("Discount price must be lower than regular price");
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`/api/listing/update/${params.listingId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +168,7 @@ export default function CreateListing() {
       if (data.success === false) {
         setError(data.message);
       }
-      navigate(`/createlisting/${data._id}`);
+      navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -156,9 +177,12 @@ export default function CreateListing() {
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
-        Create a Listing
+        Update a Listing
       </h1>
-      <form onSubmit={handleSubmit} className=" flex flex-col sm:flex-row gap-4">
+      <form
+        onSubmit={handleSubmit}
+        className=" flex flex-col sm:flex-row gap-4"
+      >
         <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
@@ -243,7 +267,9 @@ export default function CreateListing() {
           </div>
           <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-2">
-            <span className="flex items-center h-6 w-6"><img src="bed.svg" alt="bedrooms"/></span>
+              <span className="flex items-center h-6 w-6">
+                <img src="bed.svg" alt="bedrooms" />
+              </span>
               <input
                 type="number"
                 id="bedrooms"
@@ -257,7 +283,9 @@ export default function CreateListing() {
               <p>Beds</p>
             </div>
             <div className="flex items-center gap-2">
-            <span className="flex items-center h-6 w-6 p-1"><img src="bathroom.svg" alt="bathrooms"/></span>
+              <span className="flex items-center h-6 w-6 p-1">
+                <img src="bathroom.svg" alt="bathrooms" />
+              </span>
               <input
                 type="number"
                 id="bathrooms"
@@ -369,7 +397,7 @@ export default function CreateListing() {
             disabled={loading || uploading}
             className="p-3 bg-slate-700 text-white uppercase disabled:opacity-80 hover:bg-green-500 hover:text-green-50 hover:shadow-lg"
           >
-            {loading ? "Creating..." : "Create listing"}
+            {loading ? "Updating..." : "Update listing"}
           </button>
           {error && <p className="text-red-700 text-sm">{error}</p>}
         </div>
